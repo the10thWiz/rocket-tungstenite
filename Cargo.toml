@@ -1,0 +1,14 @@
+[package]
+name = "rocket-tungstenite"
+version = "0.1.0"
+authors = ["Matthew Pomes <the10thwiz@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+rocket = { git = "https://github.com/the10thWiz/Rocket.git", branch = "websockets" }
+async-trait = "0.1.7"
+sha-1 = "0.9.3"
+tokio = "1.2.0"
+tokio-tungstenite = "0.14.0"
