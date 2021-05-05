@@ -46,6 +46,8 @@ async fn join_room() -> Websocket {
 }
 ```
 
+See [examples/echo.rs] for a full example.
+
 ## TODO
 
 [-] Create optional request gaurd that checks headers
