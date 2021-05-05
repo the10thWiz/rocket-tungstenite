@@ -1,8 +1,7 @@
 
-use rocket::{Request, Response, http::{Header, Status, hyper::{header::{CONNECTION, UPGRADE}, upgrade::OnUpgrade}}, response::{self, Responder, upgrade::{UpgradeResponder, Upgraded}}};
+use rocket::{Request, Response, http::{Header, Status, hyper::{header::{CONNECTION, UPGRADE}}}, response::{self, Responder, upgrade::{UpgradeResponder, Upgraded}}};
 use tokio::sync::oneshot;
-use std::{future::Future, pin::Pin, task::{Context, Poll}};
-use tungstenite::{Error, error::ProtocolError};
+use std::{io::Cursor, pin::Pin};
 use tungstenite::protocol::{Role, WebSocketConfig};
 use async_trait::async_trait;
 
@@ -30,7 +29,7 @@ impl<'r, 'o: 'r> Responder<'r, 'o> for RocketWebsocket {
 	response.header(Header::new(CONNECTION.as_str(), "upgrade"));
 	response.header(Header::new(UPGRADE.as_str(), "websocket"));
 	response.header(Header::new("Sec-WebSocket-Accept", convert_key(key.as_bytes())));
-	response.body(Body::from("switching to websocket protocol"));
+	response.sized_body(None, Cursor::new("Switching protocols to WebSocket"));
 
 	response.upgrade(Box::new(self));
 
